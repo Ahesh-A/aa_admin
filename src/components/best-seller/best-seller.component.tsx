@@ -1,0 +1,1 @@
+import './seller.styles.scss';

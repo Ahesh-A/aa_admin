@@ -1,0 +1,55 @@
+.auth-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-grow: 1;
+  .input-card {
+    width: 400px;
+    height: 300px;
+    padding: 1rem;
+    position: relative;
+    box-shadow: 0 0 2px 1px rgba(51, 51, 51, 0.3);
+    .input-card-form {
+      display: flex;
+
+      flex-direction: column;
+
+      .auth-input-label-container {
+        display: flex;
+        padding: 1rem;
+        justify-content: space-between;
+        font: 1rem poppins;
+        font-weight: 600;
+        color: #333;
+
+        .auth-input {
+          outline: none;
+          border: none;
+          box-shadow: 0 0 2px 1px rgba(51, 51, 51, 0.5);
+        }
+      }
+      .auth-input-button {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        padding: 0.5rem;
+        font: 1rem poppins;
+        background-color: #333;
+        color: rgb(247, 148, 29);
+        color: #fff;
+        border: none;
+        transition: background-color 0.3s ease-in-out;
+
+        &:hover {
+          background-color: rgb(247, 148, 29);
+          cursor: pointer;
+          
+        }
+      }
+    }
+  }
+}

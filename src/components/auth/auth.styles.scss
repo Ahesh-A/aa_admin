@@ -1,0 +1,29 @@
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  .auth-header-container {
+    display: flex;
+    background-color: #333;
+    padding: 1rem;
+
+    .auth-logo-cantainer {
+      display: inline-flex;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+    .auth-title-container {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      margin-left: 5px;
+      .auth-title {
+        color: #f7941d;
+        font: 3rem poppins;
+        font-weight: 600;
+        margin-left: 1rem;
+      }
+    }
+  }
+}
