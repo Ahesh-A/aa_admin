@@ -1,11 +1,14 @@
 import { ChangeEvent, FormEvent } from "react";
 import "./auth-input.styles.scss";
 import { useState } from "react";
-// import { createUser } from "../../utils/firebase.utils";
-//import { signIn } from "../../utils/firebase.utils";
+import { useDispatch } from "react-redux";
+import { Admin } from "../../models/admin.model";
 import { useNavigate } from "react-router-dom";
+import { signInSuccess } from "../../store/user/user.action";
 const AuthInput = () => {
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const initialValue = {
     name: "",
     email: "",
@@ -17,19 +20,20 @@ const AuthInput = () => {
   const submitHandler = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     console.log(name, password, email);
-
-    // signIn(email, password).then((res) => {
-    //   if (res) {
-    //     naviagte("home");
-    //   }
-    // });
-
+    const admin =  Admin.getInstance();
+    
+    if (admin.isAdmin(name, email, password)) {
+      dispatch(signInSuccess(admin));
+      navigate("home");
+    } else {
+      alert("invalid username or email or password...");
+    }
     setFormFields({ name: "", password: "", email: "" });
   };
-  
+
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(e);
+    
     setFormFields({
       ...formFields,
       [name]: value,

@@ -1,9 +1,10 @@
 
-import { User } from "firebase/auth"
+
 import { signInStart, signInSuccess, signInFailed, signOutStart, signOutSuccess, signOutFailed } from "./user.action"
 import { AnyAction } from "redux"
+import { Admin } from "../../models/admin.model"
 type UserInitialState = {
-    user: User | null,
+    user: Admin | null,
     isLoading: boolean,
     error: Error | null
 }
@@ -58,6 +59,7 @@ export const userReducer = (state = USER_INITIAL_STATE, action: AnyAction) => {
             error: action.payload
         }
     }
+    return state;
 
 }
 

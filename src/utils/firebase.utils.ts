@@ -2,8 +2,8 @@
 import { initializeApp } from "firebase/app";
 
 import { getFirestore, query, getDocs, collection, setDoc, doc, DocumentData } from "firebase/firestore"
-import { getAuth } from "firebase/auth";
 
+import { User, getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB1t5ShuwhX3kMfvnp1-GQfbnbZLAv-sik",
@@ -15,26 +15,10 @@ const firebaseConfig = {
   measurementId: "G-DJ9CKBFJBV",
 };
 
-// const firebaseConfig = {
-//   apiKey: process.env.API_KEY,
-//   authDomain: process.env.AUTH_DOMIAN,
-//   projectId: process.env.PROJECT_ID,
-//   storageBucket: process.env.STORAGE_BUCKET,
-//   messagingSenderId: process.env.MESSAGING_SENDER_ID,
-//   appId: process.env.API_KEY,
-//   measurementId: process.env.MEASUREMENT_ID,
-// };
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-//const auth1 = getAuth(app);
 
-// if (firebase.initializeApp()) {
-//   firebase.initializeApp({});
-// }
-// Initialize Firebase
-
-// const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
@@ -72,15 +56,65 @@ export const getUsers = async () => {
 // };
 
 
-// export const insertItemsToDeliver = async (item: any) => {
-//   const { user, cartItems } = item;
-//   // const prodId = cartItems.reduce((acc, item) => acc + item.id, "");
-//   const deliverId = `${Date.now()}${user.uid}`;
-//   console.log("Deliver ID :", deliverId);
-//   // console.log(user.uid + prodId);
-//   await setDoc(doc(db, "Items_to_deliver", user.uid), {
-//     ...user,
-//     cartItems,
-//     deliverId,
-//   });
-// };
+
+
+
+export const signIn = async (email: string, password: string): Promise<User | void> => {
+
+  return await signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      return user;
+      // ...
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+
+export const onAuthStateChangedListener = (callBack: any) =>
+  onAuthStateChanged(auth, callBack);
+
+export const googleSignOut = async () => {
+  await signOut(auth)
+    .then(() => {
+      alert("signed out successfully");
+    })
+    .catch((error) => {
+      alert(error);
+    });
+};
+
+export const getCurrentUser = (): Promise<User | null> => {
+  return new Promise((resolve, reject) => {
+    const unSubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unSubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};
+
+export type AdditionalData = {
+  displayName?: string
+}
+
+export const getCartProducts = async () => {
+  const docRef = collection(db, "prod_info");
+  const q = query(docRef);
+  const querySnapShot = await getDocs(q);
+  return querySnapShot.docs.map((doc) => doc.data());
+}
+
+export const getItemsToDeliver = async () => {
+  const docRef = collection(db, "Items_to_deliver");
+  const q = query(docRef);
+  const querySnapShot = await getDocs(q);
+  return querySnapShot.docs.map((doc) => doc.data());
+}
+

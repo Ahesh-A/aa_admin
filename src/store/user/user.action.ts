@@ -3,8 +3,9 @@ import { USER_ACTION_TYPES } from "./user.types";
 import { createAction, withMatcher, Action, ActionWithPayload } from "../../utils/create-action/create-action";
 
 import { User } from "firebase/auth";
-import { AdditionalData } from "../../utils/admin-login-auth.utils";
+import { AdditionalData } from "../../utils/firebase.utils";
 import { createTextChangeRange } from "typescript";
+import { Admin } from "../../models/admin.model";
 // SET_CURRENT_USER = "user/SET_CURRENT_USER ",
 // CHECK_USER_SESSION = "user/CHECK_USER_SESSION",
 // SIGN_IN_SUCCESS = "user/SIGN_IN_SUCCESS",
@@ -17,7 +18,7 @@ import { createTextChangeRange } from "typescript";
 
 export type CheckUserSession = Action<USER_ACTION_TYPES.CHECK_USER_SESSION>;
 export type SignInStart = Action<USER_ACTION_TYPES.SIGN_IN_START>;
-export type SignInSuccess = ActionWithPayload<USER_ACTION_TYPES.SIGN_IN_SUCCESS, User>;
+export type SignInSuccess = ActionWithPayload<USER_ACTION_TYPES.SIGN_IN_SUCCESS, Admin>;
 export type SignInFailed = ActionWithPayload<USER_ACTION_TYPES.SIGN_IN_FAILED, Error>;
 export type SignOutStart = Action<USER_ACTION_TYPES.SIGN_OUT_START>;
 export type SignOutSuccess = Action<USER_ACTION_TYPES.SIGN_OUT_SUCCESS>;
@@ -29,7 +30,7 @@ export const checkUserSession = withMatcher((): CheckUserSession => createAction
 
 export const signInStart = withMatcher((): SignInStart => createAction(USER_ACTION_TYPES.SIGN_IN_START));
 
-export const signInSuccess = withMatcher((currUser: User): SignInSuccess => createAction(USER_ACTION_TYPES.SIGN_IN_SUCCESS, currUser));
+export const signInSuccess = withMatcher((currUser: Admin): SignInSuccess => createAction(USER_ACTION_TYPES.SIGN_IN_SUCCESS, currUser));
 
 export const signInFailed = withMatcher((error: Error): SignInFailed => createAction(USER_ACTION_TYPES.SIGN_IN_FAILED, error));
 
