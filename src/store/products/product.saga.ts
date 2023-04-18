@@ -19,7 +19,7 @@ export function* trendingItems(data: Product[]) {
     yield put(
         setTrendingItemsSuccess(
             data
-                .sort((a: Product, b: Product) => (+new Date() - +new Date(b.init_date)) - (+new Date() - +new Date(a.init_date)))
+                .sort((a: Product, b: Product) => (+new Date() - +new Date(b.init_date)) / b.units_sold - (+new Date() - +new Date(a.init_date)) / a.units_sold)
                 .slice(0, 5)
         )
     );

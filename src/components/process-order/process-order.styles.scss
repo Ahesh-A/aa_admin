@@ -1,0 +1,27 @@
+.process-order-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+
+   .process-order-element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border: 1px solid #007aaf;
+    border-radius: 5px;
+    margin: 1rem;
+    font: 1rem poppins;
+    cursor: pointer;
+    
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      background-color: #007aaf;
+      color: #fff;
+    }
+  }
+}
+
+.active {
+    background-color: #007aaf;
+    color: #fff;
+}

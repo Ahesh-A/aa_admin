@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { getProductStart } from "../../store/products/products.action";
 import { selectProductsIsLoading } from "../../store/products/products.selector";
 import { itemsToDeliverStart } from "../../store/items-to-deliver/items-to-deliver.action";
+import { signOutSuccess } from "../../store/user/user.action";
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -22,9 +23,18 @@ const Home = () => {
   useEffect(() => {
     dispatch(getProductStart());
   }, [dispatch]);
+
   const productsToDeliverHandler = () => {
     dispatch(itemsToDeliverStart());
+    navigate("/product-to-deliver");
   };
+  const logOutClickHandler = () => {
+    dispatch(signOutSuccess());
+    navigate("/");
+  };
+  const updateProductClickHandler = () => {
+    navigate("/update-product");
+  }
   return productIsLoading ? (
     <Loader />
   ) : !!currUser ? (
@@ -43,13 +53,15 @@ const Home = () => {
           <span className="option" onClick={productsToDeliverHandler}>
             Products to deliver
           </span>
-          <span className="option">Update product</span>
-          <span className="option">Logout</span>
+          <span className="option" onClick = {updateProductClickHandler}>Update product</span>
+          <span className="option" onClick={logOutClickHandler}>
+            Logout
+          </span>
         </div>
       </div>
       <div className="onsale-body-container">
         <h2 className="onsale-title-container">
-          <span className="onsale-title">Trendig</span>
+          <span className="onsale-title">Trending</span>
           <div className="underline"></div>
         </h2>
         <Trending />

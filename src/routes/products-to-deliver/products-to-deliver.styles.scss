@@ -1,0 +1,18 @@
+.products-to-deliver-component {
+    padding: 2rem;
+    .products-to-deliver-title-container{
+        padding: 1rem;
+        &::after {
+            content: '';
+            display: block;
+            width: 15%;
+            height: 2px;
+            background-color: #007aaf;
+        }
+        .product-title {
+            font: 2rem poppins;
+            font-weight: 600;
+            color: #333;
+        }
+    }
+}

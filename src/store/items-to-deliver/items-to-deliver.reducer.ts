@@ -1,9 +1,8 @@
-import { Product } from "../products/products.reducer";
-import { ITEMS_TO_DELIVER_ACTION_TYPES } from "./items-to-deliver.types";
+
 import { itemsToDeliverStart, itemsToDeliverSuccess, itemsToDeliverFailed } from "./items-to-deliver.action";
 import { AnyAction } from "redux";
 type ItemsToDeliverInitialState = {
-    products: null | Product[],
+    products: null | any,
     isLoading: boolean,
     error: Error | null
 }

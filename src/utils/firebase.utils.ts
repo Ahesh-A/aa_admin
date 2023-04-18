@@ -1,7 +1,7 @@
 
 import { initializeApp } from "firebase/app";
 
-import { getFirestore, query, getDocs, collection, setDoc, doc, DocumentData } from "firebase/firestore"
+import { getFirestore, query, getDocs, collection, setDoc, doc, DocumentData, getDoc } from "firebase/firestore"
 
 import { User, getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 
@@ -118,3 +118,21 @@ export const getItemsToDeliver = async () => {
   return querySnapShot.docs.map((doc) => doc.data());
 }
 
+//export const getDeliveryProduct = 
+export const updateItemsToDeliver = async (data: any) => {
+  const itemsRef = doc(db, 'Items_to_deliver', data.deliverId);
+  await setDoc(itemsRef, data);
+  // console.log(data.deliverId,'/n');
+  // console.log(data);
+
+}
+
+export const updateProduct = async (data: any) => {
+
+  const prodRef = doc(db, 'prod_info', data.id);
+  const prodInfo = await getDoc(prodRef);
+  const newInfo = { ...prodInfo.data(), id: data.id, discount: +data.discount, quantity_left: +data.quantity_left };
+
+
+  await setDoc(prodRef, newInfo);
+}
